@@ -29,6 +29,8 @@ def get_smartmeter_entry_by_obiscode(obis_code)
             value = data.find(code, 0)
         end
         value = value * scale_factor
+    else
+
     end
     return value
 end
@@ -54,16 +56,20 @@ end
 
 def handle_find_by_id(dto)
     var request = dto["request"]
-    var url = request["url"]
+    var response = dto["response"]
 
+    var url = request["url"]
     var url_parts = string.split(url, '/')
     var id = url_parts[2]               # Note: URL starts with '/'
     var value = get_smartmeter_entry_by_obiscode(id)
 
-    var response = dto["response"]
-    handle_status_code(response, "200")
-    var data = {id: value}
-    response.insert("body", json.dump(data))
+    if value == nil
+        handle_status_code(response, "404")
+    else
+        handle_status_code(response, "200")
+        var data = {id: value}
+        response.insert("body", json.dump(data))
+    end
 end
 
 var http_handlers = {
