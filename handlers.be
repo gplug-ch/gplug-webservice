@@ -6,6 +6,7 @@ import json
 import constants
 import obiscode
 import smartmeter
+import logger
 
 def get_smartmeter_entry_by_obiscode(obis_code)
     var value = nil
@@ -40,7 +41,7 @@ def handle_status_code(response, status_code)
     response.insert("status_code", status_code_msg)
 end
 
-def handle_find_all(dto)
+def find_all(dto)
     var response = dto["response"]
     handle_status_code(response, "200")
     var data = []
@@ -51,9 +52,10 @@ def handle_find_all(dto)
         data.push(entry)
     end
     response.insert("body", json.dump(data))
+    logger.logMsg(logger.lDebug, f"Found {data.size()} entries")
 end
 
-def handle_find_by_id(dto)
+def find_by_id(dto)
     var request = dto["request"]
     var response = dto["response"]
 
@@ -68,12 +70,13 @@ def handle_find_by_id(dto)
         handle_status_code(response, "200")
         var data = {id: value}
         response.insert("body", json.dump(data))
+        logger.logMsg(logger.lDebug, f"Found entry for '{id}'")
     end
 end
 
 var http_handlers = {
-    '/obiscodes': / dto -> handle_find_all(dto),
-    '/obiscodes/{id}': / dto -> handle_find_by_id(dto)
+    '/obiscodes': / dto -> find_all(dto),
+    '/obiscodes/{id}': / dto -> find_by_id(dto)
 }
 
 def matches_route(url, route_pattern)
