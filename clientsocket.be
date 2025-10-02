@@ -37,9 +37,10 @@ class ClientSocket
 
         # Read the message as bytes
         var bytes_request = self.socket.readbytes()
+        var http_request_message = bytes_request.asstring()
         
         # Initialize DTO
-        var dto = {"request":{"bytes": bytes_request}, "response": {}}
+        var dto = {"request":{"http_message": http_request_message}, "response": {}}
 
         # Decode the message
         middleware.decode(dto)
@@ -48,10 +49,10 @@ class ClientSocket
         handlers.http_handler(dto)
 
         # Encode the message
-        var http_message = middleware.encode(dto)
+        var http_response_message = middleware.encode(dto)
 
         # Convert message to bytes
-        var bytes_response = bytes().fromstring(http_message)
+        var bytes_response = bytes().fromstring(http_response_message)
 
         # Send the response
         assert(bytes_response != nil, "Error: bytes_response cannot be nil")

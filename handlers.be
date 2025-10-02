@@ -7,7 +7,6 @@ import constants
 import obiscode
 import smartmeter
 
-
 def get_smartmeter_entry_by_obiscode(obis_code)
     var value = nil
     var entry = obiscode.get_smartmeter_code(obis_code)
