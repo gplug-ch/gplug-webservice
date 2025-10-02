@@ -57,7 +57,7 @@ def handle_find_by_id(dto)
     var url = request["url"]
 
     var url_parts = string.split(url, '/')
-    var id = url_parts[2]               # Note: URL starts with '/''
+    var id = url_parts[2]               # Note: URL starts with '/'
     var value = get_smartmeter_entry_by_obiscode(id)
 
     var response = dto["response"]
