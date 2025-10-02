@@ -65,10 +65,7 @@ middleware.decode = def(dto)
 
     def decode_http_message(dto)
         var request = dto["request"]
-        var bytes_request = request["bytes"]
-
-        # convert data into a string
-        var http_message = bytes_request.asstring()
+        var http_message = request["http_message"]
 
         # split http message into header and body
         var sections = string.split(http_message, "\r\n\r\n")

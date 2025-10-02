@@ -1,0 +1,37 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install a package
+      run: sudo apt-get install libreadline-dev
+
+    # download and build the berry interpreter
+    - name: Install Berry interpreter
+      run: |
+        # Here you could download a prebuilt binary or clone and build Berry
+        git clone https://github.com/berry-lang/berry.git
+        cd berry
+        make
+        pwd
+        chmod +x berry
+        ln -s `pwd`/berry /usr/local/bin/berry  # make berry globally accessible
+
+    - name: Run tests
+      run: |
+        make test
+
+    - name: Run tapp on success
+      if: success()  # Only runs if previous step succeeded
+      run: make tapp
