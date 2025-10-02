@@ -29,8 +29,6 @@ def get_smartmeter_entry_by_obiscode(obis_code)
             value = data.find(code, 0)
         end
         value = value * scale_factor
-    else
-
     end
     return value
 end
