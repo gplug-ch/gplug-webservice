@@ -3,7 +3,6 @@ var middleware = module()
 import strict
 import constants
 import handlers
-import json
 
 var utf8 = {
     '%C3%A4': 'ä',
@@ -147,7 +146,7 @@ middleware.encode = def(msg)
         var payload = response.find('body', '')
 
         # create http message
-        return header + json.dump(payload)
+        return header + payload
     end
 
     # Check msg

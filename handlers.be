@@ -46,7 +46,7 @@ def find_all(dto)
     var codes = obiscode.get_all_codes()
     for code : codes
         var value = get_smartmeter_entry_by_obiscode(code)
-        var entry = {code: value}
+        var entry = {"code": code, "value": value}
         data.push(entry)
     end
     response.insert("body", json.dump(data))
@@ -66,7 +66,7 @@ def find_by_id(dto)
         handle_status_code(response, "404")
     else
         handle_status_code(response, "200")
-        var data = {id: value}
+        var data = {"code": id, "value": value}
         response.insert("body", json.dump(data))
         logger.logMsg(logger.lDebug, f"Found entry for '{id}'")
     end
