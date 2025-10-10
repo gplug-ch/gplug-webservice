@@ -72,9 +72,58 @@ def find_by_id(dto)
     end
 end
 
+def get_power(dto)
+    var response = dto["response"]
+    var data = smartmeter.get_data()
+    if data != nil
+        handle_status_code(response, "200")
+        var power = map()
+        power["pi"] = data.find('Pi', 0)
+        power["po"] = data.find('Po', 0)
+        response.insert("body", json.dump(power))
+    end
+    handle_status_code(response, "404")
+end
+
+def get_power_in(dto)
+    var response = dto["response"]
+    var data = smartmeter.get_data()
+    if data != nil
+        handle_status_code(response, "200")
+        var power_in = data.find('Pi', 0)
+        response.insert("body", json.dump(power_in))
+    end
+    handle_status_code(response, "404")
+end
+
+def get_power_out(dto)
+    var response = dto["response"]
+    var data = smartmeter.get_data()
+    if data != nil
+        handle_status_code(response, "200")
+        var power_out = data.find('Po', 0)
+        response.insert("body", json.dump(power_out))
+    end
+    handle_status_code(response, "404")
+end
+
+def get_power_history(dto)
+    var response = dto["response"]
+    var data = smartmeter.get_power_history()
+    if data != nil
+        handle_status_code(response, "200")
+        response.insert("body", json.dump(data))
+    end
+    handle_status_code(response, "404")
+end 
+
 var http_handlers = {
     '/obiscodes': / dto -> find_all(dto),
-    '/obiscodes/{id}': / dto -> find_by_id(dto)
+    '/obiscodes/{id}': / dto -> find_by_id(dto),
+    '/power': / dto -> get_power(dto),
+    '/power/in': / dto -> get_power_in(dto),
+    '/power/out': / dto -> get_power_out(dto),
+    '/power/history': / dto -> get_power_history(dto)
 }
 
 def matches_route(url, route_pattern)
