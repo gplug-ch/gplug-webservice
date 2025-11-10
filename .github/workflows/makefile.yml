@@ -1,37 +1,28 @@
-name: Makefile CI
+name: Generate API docs and deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build:
+  generate-api-docs:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Install a package
-      run: sudo apt-get install libreadline-dev
-
-    # download and build the berry interpreter
-    - name: Install Berry interpreter
-      run: |
-        # Here you could download a prebuilt binary or clone and build Berry
-        git clone https://github.com/berry-lang/berry.git
-        cd berry
-        make
-        pwd
-        chmod +x berry
-        ln -s `pwd`/berry /usr/local/bin/berry  # make berry globally accessible
-
-    - name: Run tests
-      run: |
-        make test
-
-    - name: Run tapp on success
-      if: success()  # Only runs if previous step succeeded
-      run: make tapp
+      - uses: actions/checkout@v3
+      - name: Generate API docs and deploy to GitHub Pages
+        uses: msayson/openapi-github-pages-action@v2.0.0
+        with:
+          api-configs: |-
+            [
+              {
+                "openapi-json-filepath": "docs/openapi/gplug_collection.json",
+                "api-doc-filepath": "latest/docs.html"
+              }
+            ]
+          api-docs-dir: docs
