@@ -21,7 +21,7 @@ smartmeter.init = def(m)
             var entry = {
                 "Pi": pi,
                 "Po": po,
-                "timestamp": tasmota.millis()
+                "timestamp": tasmota.rtc('local')
             }
             if data != nil
                 if size(self.history) >= 120
@@ -62,8 +62,18 @@ smartmeter.init = def(m)
             return self.sm_data
         end
 
-        def get_power_history()
-            return self.history
+        def get_power_history_from(ts_from)
+            if ts_from == nil
+                return self.history
+            end
+            var index = 0
+            for entry : self.history
+                if ts_from <= entry["timestamp"]
+                    break
+                end
+                index += 1
+            end
+            return self.history[index ..]
         end
 
         def deinit()

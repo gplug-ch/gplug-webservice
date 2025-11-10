@@ -33,6 +33,14 @@ def get_smartmeter_entry_by_obiscode(obis_code)
     return value
 end
 
+def get_request_parameter(req, key)
+    var val = ""
+    if req.contains("req_params")
+        val = req["req_params"][key]
+    end
+    return val
+end
+
 def handle_status_code(response, status_code)
     var msg = constants.HTTP_STATUS_CODES[status_code]
     var status_code_msg = f"{status_code} {msg}"
@@ -108,8 +116,14 @@ def get_power_out(dto)
 end
 
 def get_power_history(dto)
+    var time = nil
     var response = dto["response"]
-    var data = smartmeter.get_power_history()
+    var from_param = get_request_parameter(dto["request"], "from")
+    if from_param
+        var date = tasmota.strptime(from_param, "%Y-%m-%dT%H:%M:%SZ")
+        time = date["epoch"]
+    end
+    var data = smartmeter.get_power_history_from(time)
     if data != nil
         handle_status_code(response, "200")
         response.insert("body", json.dump(data))
@@ -141,7 +155,7 @@ def matches_route(url, route_pattern)
         var pattern_segment = pattern_parts[i]
         var url_segment = url_parts[i]
         
-        # If pattern segment is a parameter (starts with {), it matches anything
+        # If pattern segment is a path variable (starts with '{'), it matches anything
         if size(pattern_segment) > 0 && pattern_segment[0] == '{'
             continue
         end

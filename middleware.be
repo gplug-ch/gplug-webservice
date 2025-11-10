@@ -72,7 +72,7 @@ middleware.decode = def(dto)
         # parse http message header
         var lines = string.split(sections[0], "\r\n")
         for line : lines
-            if string.count(line, ":") == 0
+            if string.find(line, "HTTP/1.1") > 0
                 # parse the start line
                 var parts = string.split(line, " ")
                 var method = string.tr(parts[0],' ','')

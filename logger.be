@@ -33,7 +33,7 @@ logger.logMsg = def(aTrLev, aMsg)
     if level < aTrLev 
         return
     end
-    print(aMsg)
+    print(f"GPWS: {aMsg}")
 end
 
 return logger
