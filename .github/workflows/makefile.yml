@@ -21,7 +21,7 @@ jobs:
           api-configs: |-
             [
               {
-                "openapi-json-filepath": "docs/openapi/gplug_collection.json",
+                "openapi-json-filepath": "docs/openapi/gplug_collection.yaml",
                 "api-doc-filepath": "latest/docs.html"
               }
             ]
