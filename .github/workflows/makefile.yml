@@ -26,3 +26,5 @@ jobs:
               }
             ]
           api-docs-dir: docs
+    environment:
+      name: github-pages
