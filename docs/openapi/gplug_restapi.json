@@ -1,0 +1,311 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "gplug",
+    "version": "1.0.0",
+    "description": "API for retrieving OBIS codes and power data",
+    "contact": {
+      "name": "API Support",
+      "email": "support@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/obiscodes": {
+      "get": {
+        "tags": [
+          "obiscodes"
+        ],
+        "summary": "Get all OBIS codes",
+        "description": "Retrieve a list of all available OBIS codes",
+        "responses": {
+          "200": {
+            "description": "Successful response with list of OBIS codes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ObisCode"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/obiscodes/{id}": {
+      "get": {
+        "tags": [
+          "obiscodes"
+        ],
+        "summary": "Get OBIS code by ID",
+        "description": "Retrieve a specific OBIS code by its identifier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The OBIS code identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with the requested OBIS code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObisCode"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "OBIS code not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/power": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get current power status",
+        "description": "Retrieve the current power in/out status",
+        "responses": {
+          "200": {
+            "description": "Current power status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PowerStatus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/power/in": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get power input",
+        "description": "Retrieve current power input data",
+        "responses": {
+          "200": {
+            "description": "Current power input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PowerData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/power/out": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get power output",
+        "description": "Retrieve current power output data",
+        "responses": {
+          "200": {
+            "description": "Current power output",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PowerData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/power/history": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get power history",
+        "description": "Retrieve historical power data, optionally filtered by start date",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Start date for history filter (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Historical power data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PowerData"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ObisCode": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "PowerData": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PowerStatus": {
+        "type": "object",
+        "properties": {
+          "powerIn": {
+            "$ref": "#/components/schemas/PowerData"
+          },
+          "powerOut": {
+            "$ref": "#/components/schemas/PowerData"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
