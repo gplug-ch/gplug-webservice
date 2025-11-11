@@ -114,7 +114,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PowerStatus"
+                  "$ref": "#/components/schemas/PowerData"
                 }
               }
             }
@@ -145,7 +145,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PowerData"
+                  "$ref": "#/components/schemas/PowerIn"
                 }
               }
             }
@@ -176,7 +176,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PowerData"
+                  "$ref": "#/components/schemas/PowerOut"
                 }
               }
             }
@@ -220,7 +220,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PowerData"
+                    "$ref": "#/components/schemas/PowerHistoryData"
                   }
                 }
               }
@@ -255,13 +255,10 @@
       "ObisCode": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "code": {
             "type": "string"
           },
-          "description": {
+          "value": {
             "type": "string"
           }
         }
@@ -269,26 +266,42 @@
       "PowerData": {
         "type": "object",
         "properties": {
-          "value": {
+          "in": {
             "type": "number"
           },
-          "unit": {
-            "type": "string"
+          "out": {
+            "type": "number"
+          }
+        }
+      },
+      "PowerIn": {
+        "type": "object",
+        "properties": {
+          "in": {
+            "type": "number"
+          }
+        }
+      },
+      "PowerOut": {
+        "type": "object",
+        "properties": {
+          "out": {
+            "type": "number"
+          }
+        }
+      },
+      "PowerHistoryData": {
+        "type": "object",
+        "properties": {
+          "in": {
+            "type": "number"
+          },
+          "out": {
+            "type": "number"
           },
           "timestamp": {
             "type": "string",
             "format": "date-time"
-          }
-        }
-      },
-      "PowerStatus": {
-        "type": "object",
-        "properties": {
-          "powerIn": {
-            "$ref": "#/components/schemas/PowerData"
-          },
-          "powerOut": {
-            "$ref": "#/components/schemas/PowerData"
           }
         }
       },

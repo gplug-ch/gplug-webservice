@@ -86,8 +86,8 @@ def get_power(dto)
     if data != nil
         handle_status_code(response, "200")
         var power = map()
-        power["pi"] = data.find('Pi', 0)
-        power["po"] = data.find('Po', 0)
+        power["in"] = data.find('Pi', 0)
+        power["out"] = data.find('Po', 0)
         response.insert("body", json.dump(power))
     end
     handle_status_code(response, "404")
@@ -98,8 +98,9 @@ def get_power_in(dto)
     var data = smartmeter.get_data()
     if data != nil
         handle_status_code(response, "200")
-        var power_in = data.find('Pi', 0)
-        response.insert("body", json.dump(power_in))
+        var power = map()
+        power["in"] = data.find('Pi', 0)
+        response.insert("body", json.dump(power))
     end
     handle_status_code(response, "404")
 end
@@ -109,8 +110,9 @@ def get_power_out(dto)
     var data = smartmeter.get_data()
     if data != nil
         handle_status_code(response, "200")
-        var power_out = data.find('Po', 0)
-        response.insert("body", json.dump(power_out))
+        var power = map()
+        power["out"] = data.find('Po', 0)
+        response.insert("body", json.dump(power))
     end
     handle_status_code(response, "404")
 end

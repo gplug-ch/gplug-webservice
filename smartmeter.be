@@ -19,8 +19,8 @@ smartmeter.init = def(m)
             var pi = data.find('Pi', 0)
             var po = data.find('Po', 0)
             var entry = {
-                "Pi": pi,
-                "Po": po,
+                "in": pi,
+                "out": po,
                 "timestamp": tasmota.rtc('local')
             }
             if data != nil
