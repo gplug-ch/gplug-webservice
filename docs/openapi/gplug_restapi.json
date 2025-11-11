@@ -11,10 +11,7 @@
   },
   "servers": [
     {
-      "gplugk": "http://gplugk.local:8080",
-      "gplugm": "http://gplugm.local:8080",
-      "gpluge": "http://gpluge.local:8080",
-      "gplugd": "http://gplugd.local:8080"
+      "url": "http://localhost:8080"
     }
   ],
   "paths": {
