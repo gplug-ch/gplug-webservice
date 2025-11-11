@@ -3,15 +3,18 @@
   "info": {
     "title": "gplug",
     "version": "1.0.0",
-    "description": "API for retrieving OBIS codes and power data",
+    "description": "API for retrieving OBIS codes and power data from a gPlug device",
     "contact": {
       "name": "API Support",
-      "email": "support@example.com"
+      "email": "info@gplug.ch"
     }
   },
   "servers": [
     {
-      "url": "http://localhost:8080"
+      "gplugk": "http://gplugk.local:8080",
+      "gplugm": "http://gplugm.local:8080",
+      "gpluge": "http://gpluge.local:8080",
+      "gplugd": "http://gplugd.local:8080"
     }
   ],
   "paths": {
