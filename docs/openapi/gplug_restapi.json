@@ -188,74 +188,74 @@
           }
         }
       }
-    },
-    "components": {
-      "schemas": {
-        "ObisCode": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ObisCode": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
           }
-        },
-        "PowerData": {
-          "type": "object",
-          "properties": {
-            "in": {
-              "type": "number"
-            },
-            "out": {
-              "type": "number"
-            }
+        }
+      },
+      "PowerData": {
+        "type": "object",
+        "properties": {
+          "in": {
+            "type": "number"
+          },
+          "out": {
+            "type": "number"
           }
-        },
-        "PowerIn": {
-          "type": "object",
-          "properties": {
-            "in": {
-              "type": "number"
-            }
+        }
+      },
+      "PowerIn": {
+        "type": "object",
+        "properties": {
+          "in": {
+            "type": "number"
           }
-        },
-        "PowerOut": {
-          "type": "object",
-          "properties": {
-            "out": {
-              "type": "number"
-            }
+        }
+      },
+      "PowerOut": {
+        "type": "object",
+        "properties": {
+          "out": {
+            "type": "number"
           }
-        },
-        "PowerHistoryData": {
-          "type": "object",
-          "properties": {
-            "in": {
-              "type": "number"
-            },
-            "out": {
-              "type": "number"
-            },
-            "timestamp": {
-              "type": "string",
-              "format": "date-time"
-            }
+        }
+      },
+      "PowerHistoryData": {
+        "type": "object",
+        "properties": {
+          "in": {
+            "type": "number"
+          },
+          "out": {
+            "type": "number"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
           }
-        },
-        "ErrorResponse": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "integer"
-            },
-            "message": {
-              "type": "string"
-            },
-            "details": {
-              "type": "string"
-            }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
           }
         }
       }
