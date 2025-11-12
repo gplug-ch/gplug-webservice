@@ -37,166 +37,166 @@
             }
           }
         }
-      },
-      "/obiscodes/{id}": {
-        "get": {
-          "tags": [
-            "obiscodes"
-          ],
-          "summary": "Get OBIS code by ID",
-          "description": "Retrieve a specific OBIS code by its identifier",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "description": "The OBIS code identifier",
-              "schema": {
-                "type": "string"
-              }
+      }
+    },
+    "/obiscodes/{id}": {
+      "get": {
+        "tags": [
+          "obiscodes"
+        ],
+        "summary": "Get OBIS code by ID",
+        "description": "Retrieve a specific OBIS code by its identifier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The OBIS code identifier",
+            "schema": {
+              "type": "string"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successful response with the requested OBIS code",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ObisCode"
-                  }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with the requested OBIS code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObisCode"
                 }
               }
-            },
-            "404": {
-              "description": "OBIS code not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ErrorResponse"
-                  }
+            }
+          },
+          "404": {
+            "description": "OBIS code not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           }
         }
-      },
-      "/power": {
-        "get": {
-          "tags": [
-            "power"
-          ],
-          "summary": "Get current power status",
-          "description": "Retrieve the current power in/out status",
-          "responses": {
-            "200": {
-              "description": "Current power status",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/PowerData"
-                  }
+      }
+    },
+    "/power": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get current power status",
+        "description": "Retrieve the current power in/out status",
+        "responses": {
+          "200": {
+            "description": "Current power status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PowerData"
                 }
               }
-            },
-            "204": {
-              "description": "No power data available"
             }
+          },
+          "204": {
+            "description": "No power data available"
           }
         }
-      },
-      "/power/in": {
-        "get": {
-          "tags": [
-            "power"
-          ],
-          "summary": "Get power input",
-          "description": "Retrieve current power input data",
-          "responses": {
-            "200": {
-              "description": "Current power input",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/PowerIn"
-                  }
+      }
+    },
+    "/power/in": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get power input",
+        "description": "Retrieve current power input data",
+        "responses": {
+          "200": {
+            "description": "Current power input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PowerIn"
                 }
               }
-            },
-            "204": {
-              "description": "No power data available"
             }
+          },
+          "204": {
+            "description": "No power data available"
           }
         }
-      },
-      "/power/out": {
-        "get": {
-          "tags": [
-            "power"
-          ],
-          "summary": "Get power output",
-          "description": "Retrieve current power output data",
-          "responses": {
-            "200": {
-              "description": "Current power output",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/PowerOut"
-                  }
+      }
+    },
+    "/power/out": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get power output",
+        "description": "Retrieve current power output data",
+        "responses": {
+          "200": {
+            "description": "Current power output",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PowerOut"
                 }
               }
-            },
-            "204": {
-              "description": "No power data available"
             }
+          },
+          "204": {
+            "description": "No power data available"
           }
         }
-      },
-      "/power/history": {
-        "get": {
-          "tags": [
-            "power"
-          ],
-          "summary": "Get power history",
-          "description": "Retrieve historical power data, optionally filtered by start date",
-          "parameters": [
-            {
-              "name": "from",
-              "in": "query",
-              "description": "Start date for history filter (ISO 8601 format)",
-              "schema": {
-                "type": "string",
-                "format": "date-time"
-              }
+      }
+    },
+    "/power/history": {
+      "get": {
+        "tags": [
+          "power"
+        ],
+        "summary": "Get power history",
+        "description": "Retrieve historical power data, optionally filtered by start date",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Start date for history filter (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Historical power data",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/PowerHistoryData"
-                    }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Historical power data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PowerHistoryData"
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Invalid query parameters",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ErrorResponse"
-                  }
+            }
+          },
+          "400": {
+            "description": "Invalid query parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
-            },
-            "204": {
-              "description": "No power data available"
             }
+          },
+          "204": {
+            "description": "No power data available"
           }
         }
       }
