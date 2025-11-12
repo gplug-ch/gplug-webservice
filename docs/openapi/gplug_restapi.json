@@ -97,6 +97,9 @@
                   }
                 }
               }
+            },
+            "204": {
+              "description": "No power data available"
             }
           }
         }
@@ -118,6 +121,9 @@
                   }
                 }
               }
+            },
+            "204": {
+              "description": "No power data available"
             }
           }
         }
@@ -139,6 +145,9 @@
                   }
                 }
               }
+            },
+            "204": {
+              "description": "No power data available"
             }
           }
         }
@@ -184,6 +193,9 @@
                   }
                 }
               }
+            },
+            "204": {
+              "description": "No power data available"
             }
           }
         }
