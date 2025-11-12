@@ -47,10 +47,23 @@ def handle_status_code(response, status_code)
     response.insert("status_code", status_code_msg)
 end
 
+def handle_error_code(response, url, error_code)
+    var msg = constants.HTTP_STATUS_CODES[error_code]
+    var status_code_msg = f"{error_code} {msg}"
+    response.insert("status_code", status_code_msg)
+    var error = {
+        "code": error_code,
+        "message": msg,
+        "details": f"url '{url}' not supported"
+    }
+    response.insert("body", json.dump(error))
+end
+
 def find_all(dto)
-    var response = dto["response"]
-    handle_status_code(response, "200")
     var data = []
+    var response = dto["response"]
+
+    handle_status_code(response, "200")
     var codes = obiscode.get_all_codes()
     for code : codes
         var value = get_smartmeter_entry_by_obiscode(code)
@@ -71,7 +84,7 @@ def find_by_id(dto)
     var value = get_smartmeter_entry_by_obiscode(id)
 
     if value == nil
-        handle_status_code(response, "404")
+        handle_error_code(response, url, "404")
     else
         handle_status_code(response, "200")
         var data = {"code": id, "value": value}
@@ -81,56 +94,61 @@ def find_by_id(dto)
 end
 
 def get_power(dto)
+    var power = map()
     var response = dto["response"]
     var data = smartmeter.get_data()
     if data != nil
         handle_status_code(response, "200")
-        var power = map()
         power["in"] = data.find('Pi', 0)
         power["out"] = data.find('Po', 0)
-        response.insert("body", json.dump(power))
+    else
+        handle_status_code(response, "204")
     end
-    handle_status_code(response, "404")
+    response.insert("body", json.dump(power))
 end
 
 def get_power_in(dto)
+    var power = map()
     var response = dto["response"]
     var data = smartmeter.get_data()
     if data != nil
         handle_status_code(response, "200")
-        var power = map()
         power["in"] = data.find('Pi', 0)
-        response.insert("body", json.dump(power))
+    else
+        handle_status_code(response, "204")
     end
-    handle_status_code(response, "404")
+    response.insert("body", json.dump(power))
 end
 
 def get_power_out(dto)
+    var power = map()
     var response = dto["response"]
     var data = smartmeter.get_data()
     if data != nil
         handle_status_code(response, "200")
-        var power = map()
         power["out"] = data.find('Po', 0)
-        response.insert("body", json.dump(power))
+    else
+        handle_status_code(response, "204")
     end
-    handle_status_code(response, "404")
+    response.insert("body", json.dump(power))
 end
 
 def get_power_history(dto)
     var time = nil
+    var data = []
     var response = dto["response"]
     var from_param = get_request_parameter(dto["request"], "from")
     if from_param
         var date = tasmota.strptime(from_param, "%Y-%m-%dT%H:%M:%SZ")
         time = date["epoch"]
     end
-    var data = smartmeter.get_power_history_from(time)
-    if data != nil
+    data = smartmeter.get_power_history_from(time)
+    if data.size()>0
         handle_status_code(response, "200")
-        response.insert("body", json.dump(data))
+    else
+        handle_status_code(response, "204")
     end
-    handle_status_code(response, "404")
+    response.insert("body", json.dump(data))
 end 
 
 var http_handlers = {
@@ -185,8 +203,9 @@ handlers.http_handler = def(dto)
     # Check if handler exists for the url
     var handler = find_handler(url)
     if handler == nil
+        var response = dto["response"]
         # Return status code "404 NOT FOUND"
-        handle_status_code(dto["response"], "404")   
+        handle_error_code(response, url, "404")
     else
         handler(dto)
     end 
